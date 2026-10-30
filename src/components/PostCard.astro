@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  excerpt: string;
+  href: string;
+  date?: string;
+  category?: string;
+  readingTime?: string;
+  cover?: string;
+}
+
+const {
+  title,
+  excerpt,
+  href,
+  date,
+  category = '随笔',
+  readingTime,
+  cover,
+} = Astro.props;
+---
+
+<article class="post-card">
+  <a href={href} class="post-card__link" aria-label={`阅读${title}`}>
+    <div class="post-card__content">
+      <div class="post-card__meta"><span>{category}</span>{date && <time datetime={date}>{date}</time>}{readingTime && <span>{readingTime}</span>}</div>
+      <h3 class="post-card__title">{title}</h3>
+      <p class="post-card__excerpt">{excerpt}</p>
+      <span class="post-card__read">阅读全文 <span aria-hidden="true">↗</span></span>
+    </div>
+    {cover ? <div class="post-card__cover"><img src={cover} alt="" loading="lazy" /></div> : <span class="post-card__arrow" aria-hidden="true">↗</span>}
+  </a>
+</article>

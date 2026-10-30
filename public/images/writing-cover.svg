@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="抽象的纸张与文字图案">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e8e3da"/><stop offset="1" stop-color="#d7dedb"/></linearGradient></defs>
+  <path fill="url(#bg)" d="M0 0h1200v760H0z"/>
+  <g transform="rotate(-7 600 380)">
+    <rect x="272" y="75" width="656" height="615" rx="8" fill="#f9f8f4" stroke="#c6cdca" stroke-width="2"/>
+    <path d="M345 183h236M345 241h507M345 280h467M345 319h491M345 358h403M345 423h507M345 462h444M345 501h476M345 540h352" stroke="#a9b9ba" stroke-width="11" stroke-linecap="round"/>
+    <path d="M347 146h129" stroke="#2e546e" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="813" cy="590" r="41" fill="#cc9b80"/>
+  </g>
+</svg>

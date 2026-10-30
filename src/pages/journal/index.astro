@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { site } from '../../data/site';
+
+const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const formatDate = (date: Date) => new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+---
+
+<BaseLayout title={`文章与生活｜${site.name}`} description="关于研究、创造与日常生活的记录。" currentPath="/journal" siteName={site.name}>
+  <div class="page-container inner-page">
+    <header class="page-intro">
+      <span class="overline">03 / JOURNAL</span>
+      <h1>文章与生活<span class="accent">.</span></h1>
+      <p>写下做过的事，也记录正在观察的世界。这里既有专业思考，也有不急于得出结论的日常。</p>
+    </header>
+    <div class="post-grid">
+      {posts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          excerpt={post.data.summary}
+          href={`/journal/${post.id}/`}
+          date={formatDate(post.data.date)}
+          category={`${post.data.placeholder ? '内容示例 · ' : ''}${post.data.category}`}
+          cover={post.data.cover}
+        />
+      ))}
+    </div>
+    <p class="note">此站目前使用示例内容。将新文章写成 Markdown 文件后，列表会自动更新。</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .inner-page{padding-top:5rem;padding-bottom:8rem;min-height:70vh}
+  .page-intro{padding-bottom:4rem;border-bottom:1px solid var(--line);margin-bottom:3rem}
+  h1{font-size:clamp(3.2rem,7.5vw,7rem);letter-spacing:-.075em;line-height:1.1;margin:1rem 0 1.4rem;font-weight:600}
+  .accent{color:var(--accent)}
+  .page-intro p{max-width:37rem;color:var(--muted);line-height:1.9;font-size:1.04rem}
+  .post-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.3rem}
+  .note{font-size:.8rem;color:var(--muted);margin-top:2.5rem}
+  @media(max-width:650px){.inner-page{padding-top:3rem;padding-bottom:5rem}.post-grid{grid-template-columns:1fr}}
+</style>
+

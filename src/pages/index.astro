@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostCard from '../components/PostCard.astro';
+import { site, experiences, honors } from '../data/site';
+
+const projects = (await getCollection('projects'))
+  .filter((item) => item.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+const posts = (await getCollection('posts'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 2);
+const formatDate = (date: Date) => new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: '2-digit' }).format(date);
+---
+
+<BaseLayout title={`${site.name}｜个人主页`} description={site.intro} currentPath="/" siteName={site.name}>
+  <section class="hero page-container" aria-labelledby="hero-title">
+    <div class="hero-topline">
+      <span class="overline">PORTFOLIO & JOURNAL</span>
+      <span class="hero-location">{site.location} · {site.availability}</span>
+    </div>
+    <div class="hero-main">
+      <div>
+        <p class="hero-kicker">你好，我是</p>
+        <h1 id="hero-title">{site.name}<span class="period">.</span></h1>
+        <p class="hero-tagline">{site.tagline}</p>
+        <p class="hero-intro">{site.intro}</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/work">探索我的作品 <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="/about">进一步了解我 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="hero-mark" aria-hidden="true">
+        <span class="hero-mark-small">CURIOUS BY NATURE</span>
+        <span class="hero-mark-big">逐光<br />而行<span>.</span></span>
+        <span class="hero-mark-bottom">RESEARCH / BUILD / LIVE</span>
+      </div>
+    </div>
+    <div class="hero-bottomline"><span>研究 · 创造 · 记录</span><span>SCROLL TO EXPLORE ↓</span></div>
+  </section>
+
+  <section class="section page-container" aria-labelledby="featured-title">
+    <div class="section-head">
+      <div><span class="overline">01 / SELECTED WORK</span><h2 id="featured-title">精选研究与项目</h2></div>
+      <a class="text-link" href="/work">查看全部 <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="project-grid">
+      {projects.map((project, index) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.summary}
+          href={`/work/${project.id}/`}
+          category={`${project.data.placeholder ? '内容示例 · ' : ''}${project.data.category}`}
+          period={project.data.period ?? formatDate(project.data.date)}
+          tags={project.data.tags}
+          index={String(index + 1).padStart(2, '0')}
+          image={project.data.cover}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="section muted-section" aria-labelledby="experience-title">
+    <div class="page-container experience-layout">
+      <div class="experience-heading">
+        <span class="overline">02 / PATH & RECOGNITION</span>
+        <h2 id="experience-title">经历，<br />塑造现在的我。</h2>
+        <p>从课堂、实验室到真实项目，记录每一次认真投入的过程。</p>
+        <a class="text-link" href="/experience">查看完整经历 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="experience-list">
+        {experiences.slice(0, 2).map((item) => (
+          <div class="experience-item">
+            <span class="experience-period">{item.period}</span>
+            <div><span class="mini-label">{item.placeholder ? '内容示例 / ' : ''}{item.kind}</span><h3>{item.title}</h3><p>{item.organization}</p></div>
+            <span aria-hidden="true">↗</span>
+          </div>
+        ))}
+        {honors.slice(0, 1).map((item) => (
+          <div class="experience-item">
+            <span class="experience-period">{item.year}</span>
+            <div><span class="mini-label">{item.placeholder ? '内容示例 / ' : ''}荣誉</span><h3>{item.title}</h3><p>{item.issuer}</p></div>
+            <span aria-hidden="true">↗</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section page-container" aria-labelledby="journal-title">
+    <div class="section-head">
+      <div><span class="overline">03 / NOTES & LIFE</span><h2 id="journal-title">最近的记录</h2></div>
+      <a class="text-link" href="/journal">阅读更多 <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="post-grid">
+      {posts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          excerpt={post.data.summary}
+          href={`/journal/${post.id}/`}
+          date={formatDate(post.data.date)}
+          category={`${post.data.placeholder ? '内容示例 · ' : ''}${post.data.category}`}
+          cover={post.data.cover}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="cta page-container">
+    <span class="overline">LET'S CONNECT</span>
+    <h2>保持好奇，<br />也欢迎与你交流。</h2>
+    <a class="button button-light" href={site.email ? `mailto:${site.email}` : '/about/'}>{site.email ? '给我写邮件' : '了解更多'} <span aria-hidden="true">↗</span></a>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero{padding-top:2.2rem;padding-bottom:2.4rem;min-height:650px;display:flex;flex-direction:column;justify-content:space-between}
+  .hero-topline,.hero-bottomline{display:flex;justify-content:space-between;gap:1rem;align-items:center;color:var(--muted);font-size:.8rem;letter-spacing:.08em}
+  .hero-topline{padding-bottom:1rem;border-bottom:1px solid var(--line)}
+  .hero-bottomline{padding-top:1rem;border-top:1px solid var(--line)}
+  .hero-main{display:grid;grid-template-columns:1.2fr .8fr;gap:3rem;align-items:center;padding:5rem 0}
+  .hero-kicker{color:var(--accent);font-size:.95rem;margin:0 0 1rem}
+  h1{font-size:clamp(4.8rem,11vw,10rem);line-height:.95;letter-spacing:-.09em;margin:0;font-weight:600}
+  .period,.hero-mark-big span{color:var(--accent)}
+  .hero-tagline{font-size:clamp(1.4rem,2.8vw,2.3rem);line-height:1.45;margin:2.4rem 0 1rem;max-width:25ch;font-weight:500;letter-spacing:-.025em}
+  .hero-intro{color:var(--muted);line-height:1.85;max-width:39rem;margin:0}
+  .hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:1.7rem;margin-top:2.5rem}
+  .hero-mark{aspect-ratio:4/4.3;background:var(--accent);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:2rem;position:relative;overflow:hidden}
+  .hero-mark:after{content:'';position:absolute;width:70%;height:70%;border:1px solid rgba(255,255,255,.18);border-radius:50%;right:-25%;top:10%}
+  .hero-mark-small,.hero-mark-bottom{font-size:.7rem;letter-spacing:.18em;position:relative;z-index:1}
+  .hero-mark-big{font-size:clamp(3rem,5vw,5.7rem);letter-spacing:-.08em;line-height:1.25;font-weight:600;position:relative;z-index:1}
+  .hero-mark-big span{color:#c3d0e8}
+  .section{padding-top:7rem;padding-bottom:7rem}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:2rem;margin-bottom:2.7rem}
+  .section-head h2,.experience-heading h2,.cta h2{font-size:clamp(2rem,4.2vw,4rem);letter-spacing:-.055em;line-height:1.2;margin:.7rem 0 0;font-weight:600}
+  .project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem}
+  .post-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+  .muted-section{background:#eeede8}
+  .experience-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:5rem}
+  .experience-heading p{color:var(--muted);line-height:1.85;max-width:23rem;margin:1.6rem 0 2.3rem}
+  .experience-list{border-top:1px solid var(--line-strong)}
+  .experience-item{padding:1.7rem 0;border-bottom:1px solid var(--line-strong);display:grid;grid-template-columns:7rem 1fr auto;gap:1.2rem;align-items:start}
+  .experience-period,.mini-label{font-size:.77rem;color:var(--muted)}
+  .experience-item h3{font-size:1.2rem;margin:.35rem 0;font-weight:600}
+  .experience-item p{margin:0;color:var(--muted);font-size:.9rem}
+  .experience-item>span:last-child{color:var(--accent)}
+  .cta{background:var(--ink);color:white;padding-top:5rem;padding-bottom:5rem;margin-bottom:5rem;display:flex;align-items:end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+  .cta .overline{width:100%;color:#aab6c5}
+  .cta h2{margin:0}
+  @media(max-width:900px){.hero-main{grid-template-columns:1fr}.hero-mark{display:none}.project-grid{grid-template-columns:1fr 1fr}.experience-layout{grid-template-columns:1fr;gap:2.5rem}}
+  @media(max-width:640px){.hero{min-height:auto}.hero-main{padding:5rem 0 4rem}.hero-location{display:none}.section{padding-top:4.5rem;padding-bottom:4.5rem}.project-grid,.post-grid{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column;gap:1rem}.experience-item{grid-template-columns:5rem 1fr auto;gap:.65rem}.cta{margin-bottom:0}}
+</style>

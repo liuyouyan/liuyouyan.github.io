@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  currentPath?: string;
+  ogImage?: string;
+  siteName?: string;
+}
+
+const {
+  title,
+  description = '记录研究、项目、成长与日常。',
+  currentPath = Astro.url.pathname,
+  ogImage,
+  siteName = '你的名字',
+} = Astro.props;
+
+const fullTitle = title;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
+const socialImage = ogImage ? new URL(ogImage, Astro.site ?? Astro.url.origin).toString() : undefined;
+const isDraft = site.draft;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f6f2" />
+    <meta name="description" content={description} />
+    {isDraft && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    <meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={`${siteName}的文章`} href="/rss.xml" />
+    <title>{fullTitle}</title>
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main-content">跳转到正文</a>
+    <div class="site-shell">
+      {isDraft && <div class="sample-banner"><div class="container"><strong>内容示例</strong><span>这是一份待填写的个人网站模板；公开分享前请替换资料、经历和联系方式。</span></div></div>}
+      <SiteHeader currentPath={currentPath} siteName={siteName} />
+      <main id="main-content"><slot /></main>
+      <SiteFooter siteName={siteName} />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={`关于我｜${site.name}`} description={site.intro} currentPath="/about" siteName={site.name}>
+  <div class="page-container about-page">
+    <header class="page-intro">
+      <span class="overline">04 / ABOUT ME</span>
+      <h1>关于我<span class="accent">.</span></h1>
+      <p class="lede">{site.tagline}</p>
+    </header>
+
+    <div class="about-grid">
+      <div class="about-side">
+        <div class="monogram" aria-hidden="true"><span>HELLO<br />THERE<span class="dot">.</span></span></div>
+        <div class="side-caption"><span>{site.nameEn}</span><span>{site.location}</span></div>
+      </div>
+      <div class="about-copy">
+        <span class="overline">A LITTLE MORE</span>
+        <h2>保持好奇，认真做事。</h2>
+        <p>{site.intro}</p>
+        <p>这里会逐步整理我在学习、研究、项目实践与实习中的探索，也会记录阅读、观察和生活里的小事。真正的个人经历与作品，稍后会替换当前示例内容。</p>
+        <div class="facts">
+          <div><span>所在地</span><strong>{site.location}</strong></div>
+          <div><span>当前状态</span><strong>{site.availability}</strong></div>
+          <div><span>GitHub</span><a href={site.github} target="_blank" rel="noopener noreferrer">访问主页 ↗</a></div>
+        </div>
+        <div class="contact">
+          <span class="overline">GET IN TOUCH</span>
+          <h2>欢迎交流想法与机会。</h2>
+          <div class="contact-links">
+            {site.email && <a href={`mailto:${site.email}`}>{site.email} ↗</a>}
+            <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            {site.scholar && <a href={site.scholar} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>}
+            {site.resumeUrl && <a href={site.resumeUrl}>下载简历 ↗</a>}
+          </div>
+          <p class="disclaimer">邮箱与个人资料目前为占位信息，请在公开发布前替换。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-page{padding-top:5rem;padding-bottom:8rem}
+  .page-intro{padding-bottom:4rem;border-bottom:1px solid var(--line);margin-bottom:4rem}
+  h1{font-size:clamp(3.2rem,7.5vw,7rem);letter-spacing:-.075em;line-height:1.1;margin:1rem 0 1.4rem;font-weight:600}
+  .accent,.dot{color:var(--accent)}
+  .lede{font-size:clamp(1.25rem,2vw,1.8rem);line-height:1.6;max-width:35rem;margin:0}
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:6rem}
+  .monogram{aspect-ratio:4/4.6;background:#dce2e6;display:flex;align-items:end;padding:2rem;overflow:hidden}
+  .monogram span{font-size:clamp(3.2rem,6vw,6rem);font-weight:600;line-height:1;letter-spacing:-.085em;color:var(--ink)}
+  .side-caption{display:flex;justify-content:space-between;gap:1rem;margin-top:1rem;color:var(--muted);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em}
+  .about-copy{padding-top:.5rem}
+  h2{font-size:clamp(1.8rem,3vw,3rem);line-height:1.3;letter-spacing:-.05em;margin:1rem 0 2rem;font-weight:600}
+  .about-copy>p{color:var(--muted);line-height:1.95;font-size:1.02rem;margin-bottom:1.2rem}
+  .facts{border-top:1px solid var(--line);margin-top:3rem}
+  .facts>div{display:grid;grid-template-columns:8rem 1fr;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+  .facts span{font-size:.85rem;color:var(--muted)}
+  .facts strong,.facts a{font-size:.9rem;font-weight:500}
+  .facts a{color:var(--accent)}
+  .contact{margin-top:5rem}
+  .contact-links{display:flex;gap:1rem 2rem;flex-wrap:wrap}
+  .contact-links a{color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:.2rem}
+  .disclaimer{font-size:.8rem!important;margin-top:2rem;color:var(--muted)}
+  @media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:3rem}.about-side{max-width:430px}.page-intro{margin-bottom:3rem}}
+  @media(max-width:640px){.about-page{padding-top:3rem;padding-bottom:5rem}}
+</style>
+

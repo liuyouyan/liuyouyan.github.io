@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  category?: string;
+  period?: string;
+  tags?: string[];
+  index?: string;
+  image?: string;
+}
+
+const {
+  title,
+  description,
+  href,
+  category = '精选项目',
+  period,
+  tags = [],
+  index = '01',
+  image,
+} = Astro.props;
+---
+
+<article class="project-card">
+  <a href={href} class="project-card__link" aria-label={`查看${title}详情`}>
+    <div class:list={['project-card__visual', { 'project-card__visual--image': !!image }]}>
+      {image ? <img src={image} alt="" loading="lazy" /> : <><span class="project-card__visual-index">{index}</span><span class="project-card__visual-symbol" aria-hidden="true">✳</span></>}
+      <span class="project-card__visual-arrow" aria-hidden="true">↗</span>
+    </div>
+    <div class="project-card__meta"><span>{category}</span>{period && <span>{period}</span>}</div>
+    <h3 class="project-card__title">{title}</h3>
+    <p class="project-card__description">{description}</p>
+    {tags.length > 0 && <div class="tag-list" aria-label="项目关键词">{tags.map((tag) => <span class="tag">{tag}</span>)}</div>}
+  </a>
+</article>

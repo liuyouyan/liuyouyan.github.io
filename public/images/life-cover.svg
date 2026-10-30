@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="抽象的日光与风景图案">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ebe8dc"/><stop offset="1" stop-color="#d1dbd7"/></linearGradient></defs>
+  <path fill="url(#sky)" d="M0 0h1200v760H0z"/>
+  <circle cx="815" cy="230" r="104" fill="#d2a88c"/>
+  <path d="M0 514c153-58 300-111 475-98 151 12 274 93 434 60 114-24 188-70 291-47v331H0z" fill="#8da6a0"/>
+  <path d="M0 593c180-67 342-62 499-1 186 72 395 49 701-39v207H0z" fill="#3a5e70"/>
+  <path d="M0 681c245-74 427-26 650 14 192 34 375 14 550-32v97H0z" fill="#25465f"/>
+  <path d="M96 320c53-34 109-41 171-21M233 273c42-26 83-33 130-24" stroke="#f8f7f1" stroke-width="9" stroke-linecap="round" fill="none" opacity=".67"/>
+</svg>

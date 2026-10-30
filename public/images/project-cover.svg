@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="抽象的产品界面图案">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e8e4dc"/><stop offset="1" stop-color="#d8dedc"/></linearGradient></defs>
+  <path fill="url(#bg)" d="M0 0h1200v760H0z"/>
+  <rect x="188" y="132" width="824" height="500" rx="20" fill="#fbfaf6" stroke="#b6c2c3" stroke-width="2"/>
+  <path d="M188 191h824" stroke="#b6c2c3" stroke-width="2"/>
+  <circle cx="227" cy="162" r="7" fill="#c48e78"/><circle cx="252" cy="162" r="7" fill="#d2bb92"/><circle cx="277" cy="162" r="7" fill="#8ca69d"/>
+  <rect x="226" y="232" width="212" height="351" rx="10" fill="#e6e9e5"/>
+  <rect x="466" y="232" width="507" height="155" rx="10" fill="#2c5069"/>
+  <path d="M504 334c72-15 104-59 169-50 54 8 91 58 147 38 32-11 67-55 114-39" fill="none" stroke="#cfdcda" stroke-width="5" stroke-linecap="round"/>
+  <rect x="466" y="410" width="242" height="173" rx="10" fill="#d5dfdc"/><rect x="730" y="410" width="243" height="173" rx="10" fill="#e9ddd1"/>
+  <path d="M256 269h133M256 304h109M256 339h127M256 374h78" stroke="#9bafaf" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="587" cy="497" r="44" fill="#77929b"/><circle cx="851" cy="497" r="44" fill="#c5957d"/>
+</svg>

@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { site } from '../../data/site';
+
+const projects = (await getCollection('projects')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title={`研究与项目｜${site.name}`} description="研究、项目与实践的精选档案。" currentPath="/work" siteName={site.name}>
+  <div class="page-container inner-page">
+    <div class="page-intro">
+      <span class="overline">01 / SELECTED WORK</span>
+      <h1>研究与项目<span class="accent">.</span></h1>
+      <p>我关注的问题、做过的尝试，以及其中真正属于我的贡献。每个案例都尽量完整记录背景、方法与结果。</p>
+    </div>
+    <div class="grid">
+      {projects.map((project, index) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.summary}
+          href={`/work/${project.id}/`}
+          category={`${project.data.placeholder ? '内容示例 · ' : ''}${project.data.category}`}
+          period={project.data.period}
+          tags={project.data.tags}
+          index={String(index + 1).padStart(2, '0')}
+          image={project.data.cover}
+        />
+      ))}
+    </div>
+    <p class="note">此站目前使用示例内容。替换 Markdown 文件后，这里会自动更新。</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .inner-page{padding-top:5rem;padding-bottom:8rem;min-height:70vh}
+  .page-intro{padding-bottom:4rem;border-bottom:1px solid var(--line);margin-bottom:3rem}
+  h1{font-size:clamp(3.2rem,7.5vw,7rem);letter-spacing:-.075em;line-height:1.1;margin:1rem 0 1.4rem;font-weight:600}
+  .accent{color:var(--accent)}
+  .page-intro p{max-width:36rem;color:var(--muted);line-height:1.9;font-size:1.04rem}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.3rem}
+  .note{font-size:.8rem;color:var(--muted);margin-top:2.5rem}
+  @media(max-width:650px){.inner-page{padding-top:3rem;padding-bottom:5rem}.grid{grid-template-columns:1fr}}
+</style>
+
